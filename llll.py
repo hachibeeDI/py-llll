@@ -789,7 +789,29 @@ def where_with_index(xs, predicate_with_index):
 # TODO: Zip
 
 
+@queryize
+def foreach(xs, action):
+    '''
+    >>> def printfunc(x): print x
+    >>> range(3) | foreach(printfunc)
+    0
+    1
+    2
+    '''
+    for x in xs:
+        action(x)
 
+@queryize
+def foreach_with_index(xs, action_with_index):
+    '''
+    >>> def printfunc_with_index(x, i): print "ind->" + str(i) + " ran->" + str(x)
+    >>> ['one', 'two', 'three'] | foreach_with_index(printfunc_with_index)
+    ind->0 ran->one
+    ind->1 ran->two
+    ind->2 ran->three
+    '''
+    for i, x in enumerate(xs):
+        action_with_index(x, i)
 
 if __name__ == '__main__':
   import doctest
