@@ -51,6 +51,7 @@ class OrderedSequence:
       yield x
 
 
+from itertools import ifilterfalse
 
 
 @queryize
@@ -219,13 +220,11 @@ def distinct(xs):
   >>> [1, 2, 3, 1, 2, 3] | distinct() | to_tuple()
   (1, 2, 3)
   '''
-  yielded_table = {}
-  for x in xs:
-    if yielded_table.get(x, False):
-      pass
-    else:
-      yielded_table[x] = True
-      yield x
+  seen = set()
+  seen_add = seen.add
+  for element in ifilterfalse(seen.__contains__, xs):
+      seen_add(element)
+      yield element
 
 @queryize
 def element_at(xs, index):
