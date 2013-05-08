@@ -761,7 +761,19 @@ def to_tuple(xs):
   '''
   return tuple(xs)
 
-# TODO: Union
+@queryize
+def union(xs, ys):
+  '''
+  >>> xs = list(repeat(1, 3))
+  >>> xs.append(3)
+  >>> xs.append(4)
+  >>> ys = list(repeat(2, 3))
+  >>> ys.append(3)
+  >>> ys.append(5)
+  >>> xs | union(ys) | to_tuple()
+  (1, 3, 4, 2, 5)
+  '''
+  return xs | concat(ys) | distinct()
 
 @queryize
 def where(xs, predicate):
