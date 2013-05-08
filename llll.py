@@ -51,7 +51,7 @@ class OrderedSequence:
       yield x
 
 
-from itertools import ifilterfalse
+from itertools import ifilterfalse, takewhile, islice
 
 
 @queryize
@@ -601,13 +601,7 @@ def take(xs, n):
   >>> range(10) | take(5) | to_tuple()
   (0, 1, 2, 3, 4)
   '''
-  i = 0
-  for x in xs:
-    if i < n:
-      yield x
-    else:
-      return
-    i += 1
+  return islice(xs, n)
 
 @queryize
 def take_while(xs, predicate):
@@ -615,11 +609,7 @@ def take_while(xs, predicate):
   >>> [1, 3, 5, 7, 5, 3, 1] | take_while(lambda x: x < 5) | to_tuple()
   (1, 3)
   '''
-  for x in xs:
-    if predicate(x):
-      yield x
-    else:
-      break
+  return takewhile(predicate, xs)
 
 @queryize
 def take_while_with_index(xs, predicate_with_index):
