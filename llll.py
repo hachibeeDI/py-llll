@@ -781,11 +781,9 @@ def where_with_index(xs, predicate_with_index):
   >>> [1, 3, 5, 7] | where_with_index(lambda x, i: i % 2 == 0) | to_tuple()
   (1, 5)
   '''
-  i = 0
-  for x in xs:
+  for i, x in enumerate(xs):
     if predicate_with_index(x, i):
       yield x
-    i += 1
 
 # TODO: Zip
 
@@ -813,6 +811,7 @@ def foreach_with_index(xs, action_with_index):
     '''
     for i, x in enumerate(xs):
         action_with_index(x, i)
+
 
 if __name__ == '__main__':
   import doctest
