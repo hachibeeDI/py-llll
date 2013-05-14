@@ -51,7 +51,10 @@ class OrderedSequence:
       yield x
 
 
-from itertools import ifilterfalse, takewhile, islice
+from itertools import ifilterfalse \
+        , takewhile \
+        , islice \
+        , izip
 
 
 @queryize
@@ -785,8 +788,13 @@ def where_with_index(xs, predicate_with_index):
     if predicate_with_index(x, i):
       yield x
 
-# TODO: Zip
-
+@queryize
+def zip(xs, ys, xy_to_z):
+    '''
+    >>> [1, 2, 3] | zip('abcd', lambda xy: str(xy[0]) + ':' + xy[1]) | to_tuple()
+    ('1:a', '2:b', '3:c')
+    '''
+    return (xy_to_z(xy) for xy in izip(xs, ys))
 
 @queryize
 def foreach(xs, action):
