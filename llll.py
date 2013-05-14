@@ -789,10 +789,12 @@ def where_with_index(xs, predicate_with_index):
       yield x
 
 @queryize
-def zip(xs, ys, xy_to_z):
+def zip(xs, ys, xy_to_z=lambda xy: xy):
     '''
     >>> [1, 2, 3] | zip('abcd', lambda xy: str(xy[0]) + ':' + xy[1]) | to_tuple()
     ('1:a', '2:b', '3:c')
+    >>> range(5) | zip('abcd') | to_tuple()
+    ((0,  'a'),  (1,  'b'),  (2,  'c'),  (3,  'd'))
     '''
     return (xy_to_z(xy) for xy in izip(xs, ys))
 
