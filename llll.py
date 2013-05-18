@@ -464,11 +464,9 @@ def select_many_with_index(xs, ys_from_x_i):
   >>> [1, 2, 3] | select_many_with_index(lambda x, i: [x] * i) | to_tuple()
   (2, 3, 3)
   '''
-  i = 0
-  for x in xs:
+  for i, x in enumerate(xs):
     for y in ys_from_x_i(x, i):
       yield y
-    i += 1
 
 @queryize
 def select_with_index(xs, y_from_x_i):
@@ -476,10 +474,8 @@ def select_with_index(xs, y_from_x_i):
   >>> [3, 2, 1] | select_with_index(lambda x, i: x * i) | to_tuple()
   (0, 2, 2)
   '''
-  i = 0
-  for x in xs:
+  for i, x in enumerate(xs):
     yield y_from_x_i(x, i)
-    i += 1
 
 # TODO: SequenceEqual
 
@@ -579,14 +575,12 @@ def skip_while_with_index(xs, predicate_with_index):
   (5, 7)
   '''
   skipping = True
-  i = 0
-  for x in xs:
+  for i, x in enumerate(xs):
     if skipping and predicate_with_index(x, i):
       pass
     else:
       skipping = False
       yield x
-    i += 1
 
 @queryize
 def sum(xs, y_from_x = lambda x: x):
@@ -620,13 +614,11 @@ def take_while_with_index(xs, predicate_with_index):
   >>> [1, 3, 5, 7] | take_while_with_index(lambda x, i: x + i < 5) | to_tuple()
   (1, 3)
   '''
-  i = 0
-  for x in xs:
+  for i, x in enumerate(xs):
     if predicate_with_index(x, i):
       yield x
     else:
       break
-    i += 1
 
 @queryize
 def then_by(ordered_xs, key_from_x):
@@ -794,7 +786,7 @@ def zip(xs, ys, xy_to_z=lambda xy: xy):
     >>> [1, 2, 3] | zip('abcd', lambda xy: str(xy[0]) + ':' + xy[1]) | to_tuple()
     ('1:a', '2:b', '3:c')
     >>> range(5) | zip('abcd') | to_tuple()
-    ((0,  'a'),  (1,  'b'),  (2,  'c'),  (3,  'd'))
+    ((0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'))
     '''
     return (xy_to_z(xy) for xy in izip(xs, ys))
 
