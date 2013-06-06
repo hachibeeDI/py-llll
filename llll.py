@@ -55,6 +55,7 @@ class OrderedSequence:
 from itertools import ifilterfalse \
         , takewhile \
         , islice \
+        , dropwhile \
         , izip
 
 
@@ -237,11 +238,11 @@ def element_at(xs, index):
     2
     >>> [0, 1, 2, 3] | element_at(4)
     Traceback (most recent call last):
-      ...
+        ...
     IndexError: Index 4 is out of range
     >>> [] | element_at(0)
     Traceback (most recent call last):
-      ...
+        ...
     IndexError: Index 0 is out of range
     '''
     sentinel = []
@@ -261,12 +262,9 @@ def element_at_or_default(xs, index, default_value):
     >>> [] | element_at_or_default(0, 'hi')
     'hi'
     '''
-    i = 0
-    for x in xs:
+    for i, x in enumerate(xs):
         if i == index:
             return x
-        else:
-            i += 1
     return default_value
 
 def empty():
@@ -549,11 +547,7 @@ def skip(xs, n):
     >>> range(10) | skip(5) | to_tuple()
     (5, 6, 7, 8, 9)
     '''
-    i = 0
-    for x in xs:
-        if n <= i:
-            yield x
-        i += 1
+    return islice(xs, n, None)
 
 @queryize
 def skip_while(xs, predicate):
@@ -561,13 +555,7 @@ def skip_while(xs, predicate):
     >>> [1, 3, 5, 7, 5, 3, 1] | skip_while(lambda x: x < 5) | to_tuple()
     (5, 7, 5, 3, 1)
     '''
-    skipping = True
-    for x in xs:
-        if skipping and predicate(x):
-            pass
-        else:
-            skipping = False
-            yield x
+    return dropwhile(predicate, xs)
 
 @queryize
 def skip_while_with_index(xs, predicate_with_index):
