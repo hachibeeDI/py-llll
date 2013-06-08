@@ -24,6 +24,8 @@ License: So-called MIT/X license
     OTHER DEALINGS IN THE SOFTWARE.
 '''
 
+from functools import wraps
+
 class Query(object):
     def __init__(self, ys_from_xs):
         self.ys_from_xs = ys_from_xs
@@ -34,10 +36,11 @@ class Query(object):
 
 
 def queryize(original_query):
+    @wraps(original_query)
     def wrapped_query(*args, **kw):
         return Query(lambda xs: original_query(xs, *args, **kw))
-    wrapped_query.__doc__ = original_query.__doc__
     return wrapped_query
+
 
 class OrderedSequence(object):
     def __init__(self, xs, key_from_x):
@@ -306,6 +309,8 @@ def first(xs, predicate = lambda x: True):
     Traceback (most recent call last):
       ...
     ValueError: Sequence must contain some element
+    >>> ('abc' | first()).upper()
+    'A'
     '''
     sentinel = []
     result = xs | first_or_default(sentinel, predicate)
