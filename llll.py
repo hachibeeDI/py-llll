@@ -24,7 +24,7 @@ License: So-called MIT/X license
     OTHER DEALINGS IN THE SOFTWARE.
 '''
 
-class Query:
+class Query(object):
     def __init__(self, ys_from_xs):
         self.ys_from_xs = ys_from_xs
         return
@@ -39,12 +39,12 @@ def queryize(original_query):
     wrapped_query.__doc__ = original_query.__doc__
     return wrapped_query
 
-class OrderedSequence:
+class OrderedSequence(object):
     def __init__(self, xs, key_from_x):
         self.xs = xs
         self.key_from_x = key_from_x
         return
-    
+
     def __iter__(self):
         xsd = self.xs | to_list()
         xsd.sort(key = self.key_from_x)
