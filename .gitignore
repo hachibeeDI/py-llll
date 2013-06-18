@@ -1,1 +1,12 @@
+*~
+*.swp
+*.swo
 *.pyc
+.ropeproject
+.tox
+.coveralls.yml
+.coverage
+/build/
+/docs/_build/
+/dist/
+pynk.egg-info/
