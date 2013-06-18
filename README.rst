@@ -36,14 +36,16 @@ You can run pynk on 2.6 and 2.7.
 Installation
 =============
 
-You clould clone this repository and use ``setup.py``::
-    python setup.py install
+You clould clone this repository and use setup.py:
+
+    ``python setup.py install``
 
 
 Usage
 -------
 
-.. sourcecode:: python
+.. code:: python
+
     from operator import add
     from functools import partial
 
