@@ -1,4 +1,3 @@
-
 ========
 py-llll
 ========
@@ -39,6 +38,11 @@ Installation
 You clould clone this repository and use setup.py:
 
     ``python setup.py install``
+
+
+If you want to install by pip:
+
+    ``pip install https://github.com/hachibeeDI/py-llll/archive/master.zip``
 
 
 Usage
