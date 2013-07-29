@@ -1,3 +1,5 @@
+.. image:: https://travis-ci.org/hachibeeDI/py-llll.png?branch=master
+
 ========
 py-llll
 ========
